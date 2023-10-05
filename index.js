@@ -2,9 +2,11 @@ import 'colors'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import dotenv from 'dotenv'
+
 import express from 'express'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
+import errorMiddleware from './middlewares/error.middleware.js'
 import { router } from './routes/index.js'
 
 dotenv.config()
@@ -15,6 +17,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors())
 app.use('/api', router)
+app.use(errorMiddleware)
 
 async function main() {
 	if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
